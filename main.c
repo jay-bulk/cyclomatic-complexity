@@ -1,36 +1,35 @@
 #include <stdio.h>
 #include <string.h>
 
-void CheckBoeingString(char *aircraft, int stg, char *error_switch);
-void CheckEndString(char *aircraft, int stg);
+void CheckBoeingString(char* aircraft, int* stg, char* error_switch);
+void CheckEndString(char* aircraft, int* stg);
 
 int main() {
   int stg = 0;
-  char* aircraft;
-  char error_switch[3] = "no";
+  char aircraft;
+  char error_switch[4] = "no";
 
   CheckBoeingString(aircraft, stg, error_switch);
 
   return 0;
 }
 
-void CheckBoeingString() {
-  char error_switch[3];
+void CheckBoeingString(char* aircraft,int stg,char* error_switch) {
   if (aircraft[stg] == 'B') {
-    ++stg;
+    stg += 1;
   } else {
     error_switch = "yes";
     CheckEndString(aircraft, stg);
   }
 
-  if (&aircraft[stg] == '-') {
+  if (aircraft[stg] == '-') {
     stg++;
   } else {
     error_switch = "yes";
     CheckEndString(aircraft, stg);
   }
 
-  if (&aircraft[stg] == '7') {
+  if (aircraft[stg] == '7') {
     stg++;
   } else {
     error_switch = "yes";
@@ -53,11 +52,11 @@ void CheckBoeingString() {
   }
 }
 
-void CheckEndString() {
-  char *error_switch = "no";
+void CheckEndString(char* aircraft, int stg) {
+  char error_switch = "no";
   if (aircraft[stg] == ',') {
     stg++;
-    CheckBoeingString(&aircraft, stg, error_switch);
+    CheckBoeingString(aircraft, stg, error_switch);
   } else if (aircraft[stg] != ' ') {
     /*  
     * This doesn't make sense... the PDL said 'not = " " comment "the character is blank" '. 
